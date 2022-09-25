@@ -1,0 +1,136 @@
+// * {
+//     margin: 0;
+//     padding: 0;
+//     box-sizing: border-box;
+//   }
+
+//   body {
+//     width: 100vw;
+//     height: 100vh;
+//     display: flex;
+//     justify-content: center;
+//     align-items: center;
+//   }
+
+.darkmode__btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    background: #033489;
+    border: none;
+    cursor: pointer;
+    border-radius: 100%;
+}
+
+.darkmode__btn:hover {
+    background: #033489;
+}
+
+.darkmode__btn::after {
+    content: "settings";
+    font-family: "Material Icons";
+    font-size: 1.6em;
+    color: whitesmoke;
+}
+
+.input {
+    padding: 0.6rem 1.7rem;
+    padding-bottom: 0.8rem;
+    background: rgb(255, 255, 255);
+    border-radius: 5px;
+    // width: 90%;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 0 1px 1px #e3e3e3;
+}
+
+.input input {
+    background: none;
+    border: none;
+    font-family: "Segoe UI", sans-serif;
+    outline: none;
+    text-align: center;
+    font-size: 0.9em;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.input span {
+    width: 130%;
+    height: 3px;
+    position: absolute;
+    left: -10%;
+    top: 95%;
+    background: #868786;
+    transition: background 100ms;
+}
+
+.input input:focus~span {
+    background: #033489;
+}
+
+.input.search input[type="text"] {
+    width: 93% !important;
+}
+
+.input.search {
+    padding: 0.7rem 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.input.search input[type="submit"] {
+    padding: 0 10px;
+    width: 4%;
+    height: 100%;
+    background-image: url("https://i.ibb.co/Yc3g5bZ/Search-Light-96.png");
+    background-size: 14px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+button {
+    width: 100%;
+    padding: 0.7rem;
+    margin-top: 10px;
+    border: none;
+    background: #033489;
+    font-family: "Segoe UI", sans-serif;
+    border-radius: 5px;
+    color: white;
+    transition: all 350ms;
+}
+
+button:hover {
+    background: #033489;
+}
+
+button:active {
+    transform: scale(0.99, 0.99);
+    padding: 0;
+}
+
+
+
+#textbox {
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.alignleft {
+    width: 33.33333%;
+    text-align: left;
+}
+
+.aligncenter {
+    width: 33.33333%;
+    text-align: center;
+}
+
+.alignright {
+    width: 33.33333%;
+    text-align: right;
+}
