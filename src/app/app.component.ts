@@ -7,7 +7,9 @@ import {
     MatSnackBarHorizontalPosition,
     MatSnackBarVerticalPosition,
 } from '@angular/material/snack-bar';
+import Swal from 'sweetalert2'
 
+//const Swal = require('sweetalert2')
 @Component({
     selector: 'app-root',
     templateUrl: './app.component.html',
@@ -16,12 +18,14 @@ import {
 
 
 export class AppComponent {
+    public inputfld: string = "";
     horizontalPosition: MatSnackBarHorizontalPosition = 'start';
     verticalPosition: MatSnackBarVerticalPosition = 'bottom';
-
+    resp: any = [];
     show: boolean = false;
     title = 'Nokia';
     durationInSeconds = 3;
+    dataOfeATC: any = []
     dataOfATC: any = []
     //   [
     //     {
@@ -480,7 +484,22 @@ export class AppComponent {
     }
 
     exportAsXLSX(): void {
-        this.excelService.exportAsExcelFile(this.dataOfATC, 'batch-result');
+        Swal.fire({
+            title: 'Do you want to dowload?',
+            showDenyButton: true,
+            showCancelButton: false,
+            confirmButtonText: 'Yes',
+            denyButtonText: `NO`,
+        }).then((result: any) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                Swal.fire('Download Started!', '', 'success')
+                this.excelService.exportAsExcelFile(this.dataOfATC, 'batch-result');
+            } else if (result.isDenied) {
+                Swal.fire('Download Cancelled', '', 'info')
+            }
+        })
+
     }
 
 
@@ -494,7 +513,27 @@ export class AppComponent {
     }
 
 
+    sweet() {
+        Swal.fire({
+            title: 'Do you want to dowload?',
+            showDenyButton: true,
+            showCancelButton: false,
+            confirmButtonText: 'Yes',
+            denyButtonText: `NO`,
+        }).then((result: any) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                Swal.fire('Download Started!', '', 'success')
+            } else if (result.isDenied) {
+                Swal.fire('Download Cancelled', '', 'info')
+            }
+        })
+    }
+
+
+
     go(URL: string) {
+
         if (URL.length > 30) {
             // console.log(URL.length)
             this.httpClient.post(environment.apiKey + '/with-tms', { "url": URL }).subscribe(data => {
@@ -503,6 +542,7 @@ export class AppComponent {
                 this.show = true;
                 this.cdr.detectChanges();
                 this.openSnackBar("Data Loaded", "Success", 'blue-snackbar')
+                this.inputfld = URL;
                 //  console.log(this.dataOfATC,'response') 
             },
                 err => {
@@ -516,4 +556,60 @@ export class AppComponent {
 
 
     }
+
+    append_ecxl() {
+        if (this.inputfld.length > 30) {
+            // console.log(URL.length)
+            this.httpClient.post(environment.apiKey + '/append-exl', { "url": this.inputfld }).subscribe(datar => {
+                this.resp = datar
+                // this.dataOfATC = this.data
+                this.show = true;
+                this.cdr.detectChanges();
+                this.openSnackBar(this.resp.msg, "Success", 'blue-snackbar')
+                //  console.log(this.dataOfATC,'response') 
+            },
+                err => {
+                    console.log(err.error.msg, 'Error')
+                    this.openSnackBar(err.error.msg, "Error", 'red-snackbar')
+                });
+        }
+        else {
+            this.openSnackBar("Invalid Entry", "Warning", 'orange-snackbar')
+        }
+
+    }
+
+    entire_excl() {
+        // console.log(URL.length)
+
+        this.httpClient.get(environment.apiKey + '/entire-json').subscribe(data => {
+            this.data = data
+            this.dataOfeATC = this.data
+            // this.show = true;
+            this.cdr.detectChanges();
+            this.openSnackBar("Data Loaded", "Success", 'blue-snackbar')
+            Swal.fire({
+                title: 'Do you want to dowload?',
+                showDenyButton: true,
+                showCancelButton: false,
+                confirmButtonText: 'Yes',
+                denyButtonText: `No`,
+            }).then((result: any) => {
+                /* Read more about isConfirmed, isDenied below */
+                if (result.isConfirmed) {
+                    Swal.fire('Download Started!', '', 'success')
+                    this.excelService.exportAsExcelFile(this.dataOfeATC, 'entire-result');
+                } else if (result.isDenied) {
+                    Swal.fire('Download Cancelled', '', 'info')
+                }
+            })
+            //  console.log(this.dataOfATC,'response') 
+        },
+            err => {
+                console.log(err.error.msg, 'Error')
+                this.openSnackBar(err.error.msg, "Error", 'red-snackbar')
+            });
+    }
+
+
 }

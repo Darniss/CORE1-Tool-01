@@ -21,12 +21,12 @@
 
 <div id="textbox">
 	<p class="alignleft">
-		<button [hidden]="!show">
+		<button [hidden]="!show" (click)="append_ecxl()">
 			<i class="fa fa-plus" style="font-size:18px;color:rgb(255, 255, 255)"><b> Append Excel </b></i>
 		</button>
 	</p>
 	<p class="aligncenter">
-		<button>
+		<button (click)="entire_excl()">
 			<i class="fa fa-file-excel-o" style="font-size:18px;color:rgb(255, 255, 255);"><b> Complete Excel </b></i>
 		</button>
 	</p>
