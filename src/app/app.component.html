@@ -9,7 +9,7 @@
 <div class="demo">
 	<div class="input">
 		<input #pastedURL (keydown.enter)="go(pastedURL.value)" class="input__inner" type="text" name="my_input"
-			placeholder="<------- Paste the URL here ------->">
+			placeholder='<------- Paste the URL here ------->'>
 		<span class="input__border"></span>
 	</div>
 
@@ -20,17 +20,17 @@
 <br>
 
 <div id="textbox">
-	<p class="alignleft">
+	<p class="alignleft" style="padding-right: 5px;">
 		<button [hidden]="!show" (click)="append_ecxl()">
 			<i class="fa fa-plus" style="font-size:18px;color:rgb(255, 255, 255)"><b> Append Excel </b></i>
 		</button>
 	</p>
-	<p class="aligncenter">
+	<p class="aligncenter" style="padding-right: 2.5px; padding-left: 2.5px;">
 		<button (click)="entire_excl()">
 			<i class="fa fa-file-excel-o" style="font-size:18px;color:rgb(255, 255, 255);"><b> Complete Excel </b></i>
 		</button>
 	</p>
-	<p class="alignright">
+	<p class="alignright" style="padding-left: 5px;">
 		<button [hidden]="!show" (click)="exportAsXLSX()">
 			<i class="fa fa-download" style="font-size:18px;color:rgb(255, 255, 255)"><b> Current Excel </b></i>
 		</button>
@@ -43,19 +43,23 @@
 
 	<table class="table table-striped">
 		<tr>
+			<td><b>Sl.No </b></td>
 			<td><b>Board </b></td>
+			<td><b>Domain </b></td>
 			<td><b>Test Case</b></td>
 			<td><b>Run Time</b></td>
 			<td><b>Build ID</b></td>
 			<td><b>Status</b></td>
 		</tr>
 		<tbody>
-			<tr *ngFor="let item of dataOfATC">
+			<tr *ngFor="let item of dataOfATC;let indexid = index;">
+				<td >{{indexid+1}}</td>
 				<td>{{item.Board}}</td>
+				<td>{{item.Domain}}</td>
 				<td>{{item.Testcase}}</td>
 				<td>{{item.RunTime}}</td>
 				<td>{{item.Buildname}}</td>
-				<td>{{item.Status}}</td>
+				<td [ngStyle]="{backgroundColor: item.Status == 'TI' ? 'red' : 'green'}"><b>{{item.Status}}</b></td>
 			</tr>
 		</tbody>
 	</table>
